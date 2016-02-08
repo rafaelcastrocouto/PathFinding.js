@@ -26,12 +26,12 @@ var Panel = {
      */
     getFinder: function() {
         var finder, selected_header, heuristic, allowDiagonal, biDirectional, dontCrossCorners, weight, trackRecursion, timeLimit;
-        
+
         selected_header = $(
             '#algorithm_panel ' +
             '.ui-accordion-header[aria-selected=true]'
         ).attr('id');
-        
+
         switch (selected_header) {
 
         case 'astar_header':
@@ -131,7 +131,7 @@ var Panel = {
             trackRecursion = typeof $('#jump_point_section ' +
                                      '.track_recursion:checked').val() !== 'undefined';
             heuristic = $('input[name=jump_point_heuristic]:checked').val();
-            
+
             finder = new PF.JumpPointFinder({
               trackJumpRecursion: trackRecursion,
               heuristic: PF.Heuristic[heuristic]
@@ -165,7 +165,7 @@ var Panel = {
             });
 
             break;
-            
+
         case 'trace_header':
             allowDiagonal = typeof $('#trace_section ' +
                                      '.allow_diagonal:checked').val() !== 'undefined';
@@ -175,15 +175,21 @@ var Panel = {
                                      '.dont_cross_corners:checked').val() !=='undefined';
 
             heuristic = $('input[name=trace_heuristic]:checked').val();
-  
-            finder = new PF.TraceFinder({
-                allowDiagonal: allowDiagonal,
-                dontCrossCorners: dontCrossCorners,
-                heuristic: PF.Heuristic[heuristic]
-            });
-            
-            break;            
-            
+            if (biDirectional) {
+                finder = new PF.BiTraceFinder({
+                    allowDiagonal: allowDiagonal,
+                    dontCrossCorners: dontCrossCorners,
+                    heuristic: PF.Heuristic[heuristic]
+                });
+            } else {
+                finder = new PF.TraceFinder({
+                    allowDiagonal: allowDiagonal,
+                    dontCrossCorners: dontCrossCorners,
+                    heuristic: PF.Heuristic[heuristic]
+                });
+            }
+            break;
+
         }
 
         return finder;

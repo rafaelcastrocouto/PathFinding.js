@@ -11,7 +11,7 @@ var Heuristic  = require('../core/Heuristic');
  * @param {boolean} opt.dontCrossCorners Disallow diagonal movement touching block corners.
  * @param {function} opt.heuristic Heuristic function to estimate the distance
  *     (defaults to manhattan).
- * @param {integer} opt.weight Weight to apply to the heuristic to allow for suboptimal paths, 
+ * @param {integer} opt.weight Weight to apply to the heuristic to allow for suboptimal paths,
  *     in order to speed up the search.
  */
 function BiAStarFinder(opt) {
